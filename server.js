@@ -35,12 +35,12 @@ app.get("/note/:id", (req, res) => {
 
   const providedPassword = req.query.password;
 
-  // If password is required and doesn't match
+  
   if (note.password && note.password !== providedPassword) {
     return res.status(403).json({ error: "Incorrect password." });
   }
 
-  // If password matches or not required, then delete
+  
   delete notes[req.params.id];
 
   res.json({ text: note.text });
