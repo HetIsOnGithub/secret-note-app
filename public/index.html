@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Secret Note</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Create a Secret Note</h1>
+    <textarea id="note" rows="10" cols="30"></textarea><br />
+    <select id="expiry">
+      <option value="300000">5 minutes</option>
+      <option value="3600000">1 hour</option>
+      <option value="86400000">24 hours</option>
+    </select>
+
+    <input type="password" id="password" placeholder="Optional password" />
+
+    <button onclick="createNote()">Create</button>
+    <p id="link"></p>
+
+    <script>
+      async function createNote() {
+        const text = document.getElementById("note").value;
+        const expiry = document.getElementById("expiry").value;
+
+        const password = document.getElementById("password").value;
+
+        const res = await fetch("/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text, expiry, password }),
+        });
+
+        const data = await res.json();
+        document.getElementById(
+          "link"
+        ).innerHTML = `<a href="${data.link}" target="_blank">Your secret link</a>`;
+      }
+    </script>
+  </body>
+</html>

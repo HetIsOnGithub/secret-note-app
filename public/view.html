@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>View Secret Note</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Secret Note</h1>
+    <p id="note"></p>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+
+      let password = prompt(
+        "Enter password if required (leave empty if none):"
+      );
+      if (password === null) password = ""; // treat cancel as empty
+
+      async function getNote() {
+        const res = await fetch(
+          `/note/${id}?password=${encodeURIComponent(password || "")}`
+        );
+        const data = await res.json();
+        document.getElementById("note").innerText = data.text || data.error;
+      }
+
+      getNote();
+    </script>
+  </body>
+</html>
