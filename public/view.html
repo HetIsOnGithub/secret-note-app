@@ -15,7 +15,7 @@
       let password = prompt(
         "Enter password if required (leave empty if none):"
       );
-      if (password === null) password = ""; // treat cancel as empty
+      if (password === null) password = ""; 
 
       async function getNote() {
         const res = await fetch(
